@@ -22,8 +22,8 @@ for letter in s:
     #function to find where the letter is in the alphabet string
     for item in alphabet:
         if item == letter: #or (aindex >= len(alphabet) - 1):
-            #print("s letter is: " + letter)
-            #print("Alphabet letter is: " + item)
+            print("s letter is: " + letter)
+            print("Alphabet letter is: " + item)
             break
         aindex += 1
 
