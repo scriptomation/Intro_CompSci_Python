@@ -25,6 +25,12 @@ def staticMonPay(balance,mIntRate,MonPayRate):
     return nbalance
 
 def determineRate(balance,mIntRate,ubound,lbound):
+    '''
+    Function will determine the lowest monthly payment by using bisection 
+    seacrch
+    
+    gremaining is the remaining balance after the guess
+    '''
     guess = (ubound + lbound) / 2
     gremaining = staticMonPay(balance,mIntRate,guess)
     if round(gremaining,2) == 0:
