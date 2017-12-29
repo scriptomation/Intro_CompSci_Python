@@ -24,21 +24,17 @@ def staticMonPay(balance,mIntRate,MonPayRate):
         upBal = nbalance - MonPayRate
     return nbalance
 
-lbound = balance / 12.0
-ubound = (balance * (1 + mIntRate)**12) / 12.0
-
-guess = (ubound + lbound) / 2
-gremaining = staticMonPay(balance,mIntRate,guess)
-lremaining = staticMonPay(balance,mIntRate,lbound)
-uremaining = staticMonPay(balance,mIntRate,ubound)
-
-while round(gremaining,2) != 0:
-    if gremaining < 0:
-        ubound = guess
-    else:
-        lbound = guess
+def determineRate(balance,mIntRate,ubound,lbound):
     guess = (ubound + lbound) / 2
     gremaining = staticMonPay(balance,mIntRate,guess)
-    lremaining = staticMonPay(balance,mIntRate,lbound)
-    uremaining = staticMonPay(balance,mIntRate,ubound)
-print(str(round(guess,2)))
+    if round(gremaining,2) == 0:
+        return guess
+    elif gremaining < 0:
+        return determineRate(balance,mIntRate,guess,lbound)
+    else:
+        return determineRate(balance,mIntRate,ubound,guess)
+
+lbound = balance / 12.0
+ubound = (balance * (1 + mIntRate)**12) / 12.0
+rate = determineRate(balance,mIntRate,ubound,lbound)
+print('Lowest Payment:',round(rate,2))
