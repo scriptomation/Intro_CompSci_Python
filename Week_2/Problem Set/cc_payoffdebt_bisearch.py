@@ -6,38 +6,39 @@ Created on Tue Dec 12 00:22:32 2017
 @author: tstone
 """
 
-balance = 4773
-annualInterestRate = 0.2
+balance = 999999
+annualInterestRate = 0.18
+mIntRate = annualInterestRate/12.0
 
-def staticMonPay(balance,aIntRate,MonPayRate):
+def staticMonPay(balance,mIntRate,MonPayRate):
     '''
-    staticMonPay takes the balance, Annual Interest Rate, and Monthly Payment
-    and returns the balance after making 12 payments.  
+    given the balance, monthly interest rate and monthly payment rate the 
+    function will return the balance after paying off the debt for 12 months
     '''
-    mon = 0
-    mIntRate = aIntRate/12.0
+    month = 0
     nbalance = balance
-    upBal = round(nbalance - MonPayRate,2)
-    while mon < 12:
-        mon += 1
-        nbalance = round(upBal + upBal*mIntRate,2)
-        upBal = round(nbalance - MonPayRate,2)
-    if nbalance <= 0:
-        return MonPayRate
+    upBal = nbalance - MonPayRate
+    while month < 12:
+        month += 1
+        nbalance = upBal + upBal*mIntRate
+        upBal = nbalance - MonPayRate
+    return nbalance
+
+lbound = balance / 12.0
+ubound = (balance * (1 + mIntRate)**12) / 12.0
+
+guess = (ubound + lbound) / 2
+gremaining = staticMonPay(balance,mIntRate,guess)
+lremaining = staticMonPay(balance,mIntRate,lbound)
+uremaining = staticMonPay(balance,mIntRate,ubound)
+
+while round(gremaining,2) != 0:
+    if gremaining < 0:
+        ubound = guess
     else:
-        return staticMonPay(balance,aIntRate,MonPayRate)
-
-def noPayment(balance,aIntRate):
-    mon = 0
-    mIntRate = aIntRate/12.0
-    while mon < 12:
-        mon += 1
-        balance = round(balance + balance*mIntRate,2)
-    return balance
-
-lbound = round(balance / 12,2)
-ubound = round(noPayment(balance,annualInterestRate),2)
-
-
-
-    
+        lbound = guess
+    guess = (ubound + lbound) / 2
+    gremaining = staticMonPay(balance,mIntRate,guess)
+    lremaining = staticMonPay(balance,mIntRate,lbound)
+    uremaining = staticMonPay(balance,mIntRate,ubound)
+print(str(round(guess,2)))
