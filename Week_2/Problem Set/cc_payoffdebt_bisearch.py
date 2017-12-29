@@ -10,6 +10,10 @@ balance = 4773
 annualInterestRate = 0.2
 
 def staticMonPay(balance,aIntRate,MonPayRate):
+    '''
+    staticMonPay takes the balance, Annual Interest Rate, and Monthly Payment
+    and returns the balance after making 12 payments.  
+    '''
     mon = 0
     mIntRate = aIntRate/12.0
     nbalance = balance

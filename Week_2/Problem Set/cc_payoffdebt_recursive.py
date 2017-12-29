@@ -6,7 +6,7 @@ Created on Sun Dec 10 23:12:28 2017
 @author: tstone
 """
 
-balance = 4773
+balance = 3926
 annualInterestRate = 0.2
 
 def staticMonPay(balance,aIntRate,MonPayRate):
@@ -22,6 +22,9 @@ def staticMonPay(balance,aIntRate,MonPayRate):
         return MonPayRate
     else:
         return staticMonPay(balance,aIntRate,MonPayRate+10)
+
+MonPayRate = staticMonPay(balance,annualInterestRate,0)
+print('Lowest Payment:',str(MonPayRate))
     
 
     
