@@ -9,6 +9,7 @@ Created on Tue Dec 12 00:22:32 2017
 balance = 999999
 annualInterestRate = 0.18
 mIntRate = annualInterestRate/12.0
+iterations = 0
 
 def staticMonPay(balance,mIntRate,MonPayRate):
     '''
