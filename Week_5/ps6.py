@@ -102,14 +102,14 @@ class Message(object):
         Returns: a dictionary mapping a letter (string) to 
                  another letter (string). 
         '''
+        if shift > 26:
+            shift = shift % 26
         lowerAlphabet = string.ascii_lowercase
-        upperAlphabet = string.ascii_uppercase
         shiftAlphabet = lowerAlphabet[shift:] + lowerAlphabet[:shift]
         shift_dict = {}
         for i in range(0,26):
             shift_dict[lowerAlphabet[i]] = shiftAlphabet[i]
-        for j in range(0,26):
-            shift_dict[upperAlphabet[j]] = shiftAlphabet[j].upper()
+            shift_dict[lowerAlphabet[i].upper()] = shiftAlphabet[i].upper()            
         return shift_dict
 
     def apply_shift(self, shift):
@@ -124,7 +124,14 @@ class Message(object):
         Returns: the message text (string) in which every character is shifted
              down the alphabet by the input shift
         '''
-        pass #delete this line and replace with your code here
+        shift_dict = self.build_shift_dict(shift)
+        caesar_string = ""
+        for l in self.message_text :
+            try:
+                caesar_string = caesar_string + shift_dict[l]
+            except KeyError:
+                caesar_string = caesar_string + l
+        return caesar_string
 
 class PlaintextMessage(Message):
     def __init__(self, text, shift):
@@ -224,3 +231,73 @@ print('Actual Output:', plaintext.get_message_text_encrypted())
 ciphertext = CiphertextMessage('jgnnq')
 print('Expected Output:', (24, 'hello'))
 print('Actual Output:', ciphertext.decrypt_message())
+
+#Testing the build_shift_dict method for the Message class
+#testMes = Message('hello')
+# =============================================================================
+# #alphabet_test = string.ascii_lowercase
+# #shift3 = 'defghijklmnopqrstuvwxyzabc'
+# shift1 = 'bcdefghijklmnopqrstuvwxyza'
+# shift19 = 'tuvwxyzabcdefghijklmnopqrs'
+# testDict3 = testMes.build_shift_dict(3)
+# testDict1 = testMes.build_shift_dict(1)
+# testDict19 = testMes.build_shift_dict(19)
+# def test_build_function(shift_letters,test_dict):
+#     for i in range(0,26):
+#         if shift_letters[i] !=  test_dict[alphabet_test[i]]:
+#             print('mismatch at index ' + str(i))
+#             print('for letter ' + shift_letters[i] + ' comes to ' + \
+#                   test_dict[alphabet_test[i]])
+# print()
+# print('starting test for shift3 and testDict3...')
+# test_build_function(shift3, testDict3)
+# print('starting test for shift1 and testDict1...')
+# test_build_function(shift1, testDict1)
+# print('starting test for shift19 and testDict19...')
+# test_build_function(shift19,testDict19)
+# =============================================================================
+
+#Testing for Apply shift
+
+# =============================================================================
+# def test_apply(caesar, testMes,shift):
+#     if caesar != testMes.apply_shift(shift):
+#         print('*************')
+#         print(caesar + ' does not equal ' + testMes.apply_shift(shift))
+#         print('*************')
+# =============================================================================
+
+# =============================================================================
+# print('testing Apply shift function for all lower case')
+# testMes3 = Message('hello')
+# caesar3 = 'khoor'
+# testMes3U = Message('HelLo')
+# caesar3U = 'KhoOr'
+# print('testing all lower case')
+# test_apply(caesar3, testMes3,3)
+# print('testing mix upper case and lower')
+# test_apply(caesar3U, testMes3U,3)
+# 
+# print('testing Apply shift function for all lower case')
+# testMes19 = Message('hello')
+# caesar19 = 'axeeh'
+# testMes19U = Message('HelLo')
+# caesar19U = 'AxeEh'
+# print('testing all lower case')
+# test_apply(caesar19, testMes19,19)
+# print('testing mix upper case and lower')
+# test_apply(caesar19U, testMes19U,19)
+# =============================================================================
+# =============================================================================
+# print()
+# print('testing Apply shift function for all upper, lower and numbers')
+# testMes19 = Message('He!l lo5')
+# caesar19 = 'Ax!e eh5'
+# testMes19U = Message('hel**Lo5')
+# caesar19U = 'axe**Eh5'
+# print('testing all lower case')
+# test_apply(caesar19, testMes19,19)
+# print('testing mix upper case and lower')
+# test_apply(caesar19U, testMes19U,19)
+# =============================================================================
+
