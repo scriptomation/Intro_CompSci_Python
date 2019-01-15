@@ -12,7 +12,7 @@ import string
 import ps6
 
 #Testing the build_shift_dict method for the Message class
-#testMes = Message('hello')
+testMes = Message('hello')
 
 alphabet_test = string.ascii_lowercase
 shift3 = 'defghijklmnopqrstuvwxyzabc'
@@ -76,4 +76,17 @@ print('testing all lower case')
 test_apply(caesar19, testMes19,19)
 print('testing mix upper case and lower')
 test_apply(caesar19U, testMes19U,19)
+
+#Test functions for problem 2
+print()
+print('Testing Plaintextmessage class.....')
+pt3 = PlaintextMessage('hello',3)
+if caesar3 != pt3.message_text_encrypted:
+    print('encrypted text is incorrect. Is ' + t2.message_text_encrypted \
+          + ' should be ' + caesar3)
+pt3.change_shift(19)
+caesar19 = 'axeeh'
+if caesar19 != pt3.message_text_encrypted:
+    print("shift did not work. Is " + pt3.message_text_encrypted + \
+          " should be " + caesar19)
 

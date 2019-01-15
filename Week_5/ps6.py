@@ -192,7 +192,10 @@ class PlaintextMessage(Message):
 
         Returns: nothing
         '''
-        pass #delete this line and replace with your code here
+        self.shift = shift
+        self.encrypting_dict = Message.build_shift_dict(self,self.shift)
+        self.message_text_encrypted = Message.apply_shift(self,self.shift)
+        
 
 
 class CiphertextMessage(Message):
