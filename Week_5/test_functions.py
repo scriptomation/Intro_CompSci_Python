@@ -90,3 +90,12 @@ if caesar19 != pt3.message_text_encrypted:
     print("shift did not work. Is " + pt3.message_text_encrypted + \
           " should be " + caesar19)
 
+print()
+print("Testing CiphertextMessage class ......")
+with open('story.txt') as f:
+    content = f.readlines()
+content = "".join(content)
+ciphertext2 = CiphertextMessage(content)
+print('Story line is:', ciphertext2.decrypt_message())
+
+
